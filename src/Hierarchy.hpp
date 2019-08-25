@@ -25,6 +25,7 @@ namespace obiectum {
         public:
 
         Hierarchy();
+        Hierarchy(int argc, char **argv);
 
         vector<GameObject *> gameObjects;
 

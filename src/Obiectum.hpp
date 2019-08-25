@@ -7,3 +7,5 @@ namespace obiectum {}
 #include "Hierarchy.hpp"
 #include "physics/Vector.hpp"
 #include "components/Components.hpp"
+
+template<class ... Types> struct Tuple {};

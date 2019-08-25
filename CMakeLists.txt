@@ -13,21 +13,23 @@ endif()
 
 #include the subdirectory containing our libs
 add_subdirectory (src)
-include_directories(src)
-#indicate the entry point for the executable
+include_directories (src)
 add_executable (test src main.cpp)
 
-#find_package(OpenGL REQUIRED)
-#find_package(GLUT REQUIRED)
-#include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
+# add_subdirectory (examples)
+# include_directories (examples)
+add_executable (drawables src examples/drawables.cpp)
+
 
 if(LINUX)
     #link_directories(/usr/lib)
     #target_link_libraries(test obiectum "-lGL" "-lGLU" "-lglut" "-lGLEW")
     #target_link_libraries(test obiectum ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )
     target_link_libraries(test obiectum)
+    target_link_libraries(drawables obiectum)
 elseif(APPLE)
     target_link_libraries(test obiectum "-framework OpenGL" "-framework GLUT" "-framework Cocoa" "-framework Foundation")
+    target_link_libraries(drawables obiectum "-framework OpenGL" "-framework GLUT" "-framework Cocoa" "-framework Foundation")
 endif()
 
 # Indicate which libraries to include during the link process.

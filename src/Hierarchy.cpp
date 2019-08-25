@@ -36,6 +36,14 @@ void Hierarchy::updateDeltaTime(void) {
 
 Hierarchy* Hierarchy::hierarchy = nullptr;
 
+Hierarchy::Hierarchy(int argc, char **argv) {
+    lastTime = micros();
+    hierarchy = this;
+    glutInit(&argc, argv);
+    glutInitWindowSize(600, 600);
+    glutInitWindowPosition(50, 50);
+    glutCreateWindow("Obiectum Drawables Example");
+}
 Hierarchy::Hierarchy() {
     lastTime = micros();
     hierarchy = this;
