@@ -61,10 +61,22 @@ public:
         if (transform->position.x - (*raidius) <= 0 || transform->position.x + (*raidius) >= screenSize.x)
         {
             transform->velocity.x *= -1;
+
+            if (transform->velocity.x > 0) {
+                transform->position.x = *raidius + 1;
+            } else {
+                transform->position.x = screenSize.x - *raidius - 1;
+            }
         }
         if (transform->position.y - (*raidius) <= 0 || transform->position.y + (*raidius) >= screenSize.y)
         {
             transform->velocity.y *= -1;
+
+            if (transform->velocity.y > 0) {
+                transform->position.y = *raidius + 1;
+            } else {
+                transform->position.y = screenSize.y - *raidius - 1;
+            }
         }
     }
 };
