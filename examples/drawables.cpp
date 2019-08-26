@@ -7,72 +7,12 @@ using namespace std;
 using namespace obiectum;
 using namespace physics;
 
-class WallBounce : public Component
+class RandomShrink : public Component
 {
 private:
-    components::Transform *transform;
-    int* raidius;
-
-public:
-    void Setup(void) override
-    {
-        transform = gameObject->GetComponent<components::Transform>();
-        raidius = &gameObject->GetComponent<components::drawables::Circle>()->raidius;
-    }
-    void Update(void) override
-    {
-
-        const Vector2D screenSize = components::Drawable::getScreenSize();
-
-        if (transform->position.x - (*raidius) < 0 || transform->position.x + (*raidius) > screenSize.x)
-        {
-            transform->velocity.x *= -1;
-        }
-        if (transform->position.y - (*raidius) < 0 || transform->position.y + (*raidius) > screenSize.y)
-        {
-            transform->velocity.y *= -1;
-        }
-    }
-};
-
-class LSDShifter : public Component
-{
-public:
-    components::Transform *transform;
-
     Color *color;
-    int* raidius;
-
-    Color newColor;
-
-    int colorSpeed = 1;
-
-    void Setup(void) override
-    {
-        transform = gameObject->GetComponent<components::Transform>();
-
-        color = &gameObject->GetComponent<components::drawables::Circle>()->color;
-
-        raidius = &gameObject->GetComponent<components::drawables::Circle>()->raidius;
-
-        newColor = Color(255, 0, 0);
-    }
-    void Update(void) override
-    {
-        CycleColors();
-
-        color->r = newColor.r;
-        color->g = newColor.g;
-        color->b = newColor.b;
-
-        *raidius = (int)PingPong(newColor.r, 100) + 10;
-    }
-    void CycleColors(void)
-    {
-        HSVColor tempColor = RGBToHSV(newColor);
-        tempColor.h = (int)transform->position.y % 360;
-        newColor = HSVColorToRGB(tempColor);
-    }
+    int *radius;
+    float *mass;
 
     float PingPong(const float value, const float max)
     {
@@ -85,6 +25,82 @@ public:
             return value;
         }
         return max;
+    }
+
+public:
+    void Setup(void) override
+    {
+        color = &gameObject->GetComponent<components::drawables::Circle>()->color;
+        radius = &gameObject->GetComponent<components::drawables::Circle>()->raidius;
+        mass = &gameObject->GetComponent<components::RigidBody>()->mass;
+    }
+    void Update(void) override
+    {
+        *radius = (int)PingPong(color->g, 100) + 10;
+        *mass = *radius;
+    }
+};
+
+class WallBounce : public Component
+{
+private:
+    components::Transform *transform;
+    int *raidius;
+
+public:
+    void Setup(void) override
+    {
+        transform = gameObject->GetComponent<components::Transform>();
+        raidius = &gameObject->GetComponent<components::drawables::Circle>()->raidius;
+    }
+    void Update(void) override
+    {
+
+        const Vector2D screenSize = components::Drawable::getScreenSize();
+
+        if (transform->position.x - (*raidius) <= 0 || transform->position.x + (*raidius) >= screenSize.x)
+        {
+            transform->velocity.x *= -1;
+        }
+        if (transform->position.y - (*raidius) <= 0 || transform->position.y + (*raidius) >= screenSize.y)
+        {
+            transform->velocity.y *= -1;
+        }
+    }
+};
+
+class LSDShifter : public Component
+{
+public:
+    components::Transform *transform;
+
+    Color *color;
+
+    Color newColor;
+
+    int colorSpeed = 1;
+
+    void Setup(void) override
+    {
+        transform = gameObject->GetComponent<components::Transform>();
+
+        color = &gameObject->GetComponent<components::drawables::Circle>()->color;
+
+        newColor = Color(255, 0, 0);
+    }
+    void Update(void) override
+    {
+        CycleColors();
+
+        color->r = newColor.r;
+        color->g = newColor.g;
+        color->b = newColor.b;
+    }
+    void CycleColors(void)
+    {
+        HSVColor tempColor = RGBToHSV(newColor);
+        tempColor.h = (int)transform->position.y % 360;
+        newColor = HSVColorToRGB(tempColor);
     }
 };
 
@@ -111,6 +127,7 @@ public:
             gm1->AddComponent(new components::drawables::Circle());
             gm1->AddComponent(new LSDShifter());
             gm1->AddComponent(new WallBounce());
+            gm1->AddComponent(new RandomShrink());
             gm1->AddComponent(brush);
             //gm1->AddComponent(new components::drawables::ForceLines());
 
@@ -119,7 +136,7 @@ public:
             transform->velocity = Vector2D(0, 0);
 
             components::RigidBody *rb = gm1->GetComponent<components::RigidBody>();
-            rb->mass = 1;
+            rb->mass = 100;
 
             gm1->setupComponents();
 
