@@ -2,6 +2,7 @@
 #include <string>
 #include <cmath>
 
+#include "Point.hpp"
 #include "Vector.hpp"
 
 using namespace obiectum;
@@ -16,6 +17,10 @@ Vector2D::Vector2D()
 {
     x = 0.0f;
     y = 0.0f;
+}
+Vector2D::Vector2D(const Point &_point) {
+    x = _point.x;
+    y = _point.y;
 }
 
 float Vector2D::magnitude() const
@@ -123,6 +128,10 @@ void Vector2D::operator=(const Vector2D &rhs)
 {
     x = rhs.x;
     y = rhs.y;
+}
+
+Vector2D::operator Point() const {
+    return Point(x, y);
 }
 
 std::string Vector2D::info()

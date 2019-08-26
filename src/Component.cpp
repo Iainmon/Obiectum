@@ -32,15 +32,15 @@ Component::Component(GameObject *_gameObject)
 */
 void Component::Assign(GameObject *_gameObject)
 {
-    if (!isAssigned)
-    {
+    //if (!isAssigned)
+    //{
         gameObject = _gameObject;
         isAssigned = true;
-    }
-    else
-    {
-        throw AssignmentException();
-    }
+    //}
+    //else
+    //{
+    //    throw AssignmentException();
+    //}
 }
 
 /*

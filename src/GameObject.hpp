@@ -23,6 +23,9 @@ namespace obiectum {
     };
 
     class Component;
+    namespace physics {
+        struct Point;
+    }
 
     class GameObject {
         private:
@@ -32,6 +35,9 @@ namespace obiectum {
         public:
 
         static vector<GameObject*> gameObjects;
+        static bool mouseClicked;
+        static bool mouseUp;
+        static physics::Point mouseLocation;
 
         GameObjectMetaData metaData;
 

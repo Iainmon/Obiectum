@@ -36,6 +36,9 @@ namespace obiectum {
         static void setupAllGameObjects();
         static void updateAllGameObjects();
 
+        static void mouseFunc(int button, int state, int x, int y);
+        static void reshape(int x, int y);
+
         void RunMainLoop();
 
         #if defined(__APPLE__)

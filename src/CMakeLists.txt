@@ -10,6 +10,8 @@ add_library (obiectum
   Hierarchy.cpp
   physics/Vector.hpp
   physics/Vector.cpp
+  physics/Point.hpp
+  physics/Point.cpp
   physics/Color.hpp
   physics/Color.cpp
   components/Components.hpp

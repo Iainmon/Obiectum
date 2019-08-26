@@ -7,6 +7,8 @@
 namespace obiectum {
 namespace physics {
 
+struct Point;
+
 struct Vector2D
 {
 
@@ -14,6 +16,7 @@ struct Vector2D
 
     Vector2D(float _x, float _y);
     Vector2D();
+    Vector2D(const Point &_point);
 
     float magnitude() const;
 
@@ -42,6 +45,8 @@ struct Vector2D
     bool operator>=(const Vector2D &rhs);
 
     void operator=(const Vector2D &rhs);
+
+    operator Point() const;
 
     std::string info();
 };

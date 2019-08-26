@@ -48,7 +48,7 @@ void Drawable::fcircle(float x, float y, float radius, const Color color = Color
     GLfloat twicePi = 2.0f * M_PI;
 
     glBegin(GL_TRIANGLE_FAN);
-    glColor3f(color.r, color.g, color.b);
+    glColor4ub(color.r, color.g, color.b, color.a);
 
     glVertex2f(x, y); // center of circle
     for (i = 0; i <= triangles; i++)
@@ -60,7 +60,7 @@ void Drawable::fcircle(float x, float y, float radius, const Color color = Color
     glEnd();
 }
 
-void Drawable::circle(float cx, float cy, float r, int num_segments = 10, const Color color = Color::Cyan)
+void Drawable::circle(float cx, float cy, float r, const Color color = Color::Cyan, int num_segments = 10)
 {
 
     float theta = 2 * 3.1415926 / float(num_segments);
@@ -98,6 +98,10 @@ void Drawable::circle(float cx, float cy, float r, int num_segments = 10, const 
     glEnd();
 }
 
+void Drawable::ChangeColor(const Color _color) {
+    this->color = _color;
+}
+
 Vector2D Drawable::getScreenSize()
 {
     return physics::Vector2D(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
@@ -119,7 +123,7 @@ void Circle::Setup(void)
 {
     detail = 100;
     raidius = 200;
-    color = Color::Blue;
+    //color = Color::Blue;
     Drawable::Setup();
 }
 
@@ -147,11 +151,22 @@ void Square::Center(const Vector2D _offset = Vector2D(0, 0))
 
 void Line::Setup(void)
 {
-    color = Color::Blue;
+    color = Color::Red;
     Drawable::Setup();
 }
+// void Line::Draw(void) {
+//     line(transform->position.x + startingOffset.x, transform->position.y + startingOffset.y, transform->position.x + endingOffset.x, transform->position.y + endingOffset.y, color);
+// }
 void Line::Draw(void) {
-    line(transform->position.x + startingOffset.x, transform->position.y + startingOffset.y, transform->position.x + endingOffset.x, transform->position.y + endingOffset.y, color);
+    line(startingOffset.x, startingOffset.y, endingOffset.x, endingOffset.y, color);
+}
+
+void Line::DrawLine(const float x1, const float y1, const float x2, const float y2, const Color color = Color::Cyan) {
+    glBegin(GL_LINES);
+        glColor3i(color.r, color.g, color.b);
+        glVertex2f(x1, y1);
+        glVertex2f(x2, y2);
+    glEnd();
 }
 
 void ForceLines::Setup(void) {

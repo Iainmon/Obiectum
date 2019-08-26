@@ -55,15 +55,16 @@ namespace obiectum {
             //void arrow(const float x1, const float y1, const float x2, const float y2, const Color color);
 
             void fcircle(float x, float y, float radius, const Color color, const int triangles);
-            void circle(float cx, float cy, float r, int num_segments, const Color color);
+            void circle(float cx, float cy, float r, const Color color, int num_segments);
             
             public:
 
             void Setup(void) override;
             void Update(void) override;
 
-            void ChangeColor(const Color _color);
+            Color color = Color::Blue;
 
+            void ChangeColor(const Color _color);
             Color GetColor(void) const;
 
             static Vector2D getScreenSize();
@@ -73,15 +74,12 @@ namespace obiectum {
         namespace drawables {
             class Circle: public Drawable {
                 protected:
-
-                Color color;
-
-                int raidius;
                 
                 void Setup(void) override;
                 void Draw(void) override;
 
                 public:
+                int raidius;
                 int detail;
 
             };
@@ -116,6 +114,8 @@ namespace obiectum {
                 void SetEndingOffset(const Vector2D &_endingOffset);
                 void SetStartingAndEndingOffset(const Vector2D &_startingOffset, const Vector2D &_endingOffset);
 
+                static void DrawLine(const float x1, const float y1, const float x2, const float y2, const Color color);
+
             };
             class ForceLines: public Drawable {
                 public:
@@ -128,16 +128,20 @@ namespace obiectum {
 
         class Collidable: public Component {
             public:
+
+            static vector<Collidable*> collidables;
+
             void Setup(void) override;
             void Update(void) override;
         };
 
         namespace collidables {
+
             class SegmentCollider: public Collidable {
                 public:
 
-                Vector2D start;
-                Vector2D end;
+                physics::Point start;
+                physics::Point end;
 
                 void Setup(void) override;
                 void Update(void) override;

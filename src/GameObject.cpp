@@ -4,9 +4,11 @@
 
 #include "GameObject.hpp"
 #include "Component.hpp"
+#include "Physics.hpp"
 
 using namespace std;
 using namespace obiectum;
+using namespace physics;
 
 const char * ComponentMissingException::what() const throw ()
 {
@@ -48,6 +50,10 @@ GameObject::GameObject(const string _name, const string _type) {
     Static Assignment
 */
 vector<GameObject*> GameObject::gameObjects = vector<GameObject*>();
+bool GameObject::mouseClicked = false;
+bool GameObject::mouseUp = false;
+
+physics::Point GameObject::mouseLocation = physics::Point();
 /*
     Adds the new component to the array of components
 */

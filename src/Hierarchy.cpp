@@ -13,6 +13,7 @@
 
 #include "GameObject.hpp"
 #include "Component.hpp"
+#include "Physics.hpp"
 
 #include "Hierarchy.hpp"
 
@@ -43,6 +44,9 @@ Hierarchy::Hierarchy(int argc, char **argv) {
     glutInitWindowSize(600, 600);
     glutInitWindowPosition(50, 50);
     glutCreateWindow("Obiectum Drawables Example");
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_MULTISAMPLE);
+    glClearColor(0,0,0,0);
+
 }
 Hierarchy::Hierarchy() {
     lastTime = micros();
@@ -66,15 +70,14 @@ void Hierarchy::setupAllGameObjects() {
 
 void Hierarchy::updateAllGameObjects() {
 
+    glMatrixMode(GL_MODELVIEW);
     glClear(GL_COLOR_BUFFER_BIT);
-    glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_MULTISAMPLE);
     //glutSetOption(GLUT_MULTISAMPLE, 8);
     glEnable(GL_MULTISAMPLE);
-
     gluOrtho2D(0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0);
+
 
     hierarchy->updateDeltaTime();
 
@@ -85,12 +88,39 @@ void Hierarchy::updateAllGameObjects() {
     glFlush();
 }
 
+void Hierarchy::mouseFunc(int button, int state, int x, int y)
+{
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        GameObject::mouseClicked = true;
+        GameObject::mouseUp = false;
+        GameObject::mouseLocation = physics::Point(x, y);
+	}
+	else if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+        GameObject::mouseClicked = false;
+        GameObject::mouseUp = true;
+        GameObject::mouseLocation = physics::Point(x, y);
+	}
+}
+
+void Hierarchy::reshape(int x, int y) {
+    if (y == 0 || x == 0) return;  //Nothing is visible then, so return
+    glMatrixMode(GL_PROJECTION);  
+    glLoadIdentity();
+
+    glMatrixMode(GL_MODELVIEW);
+    glViewport(0,0,x,y);
+}
+
+
 void Hierarchy::RunMainLoop() {
 
     #if defined(__APPLE__)
     glutDisplayFunc(Hierarchy::APPLE_displayFunction);
     #endif
     glutIdleFunc(Hierarchy::updateAllGameObjects);
+
+    glutMouseFunc(Hierarchy::mouseFunc);
+    glutReshapeFunc(Hierarchy::reshape);
 
     setupAllGameObjects();
 
