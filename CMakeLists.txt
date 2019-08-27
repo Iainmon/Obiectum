@@ -18,7 +18,7 @@ add_executable (test src main.cpp)
 
 # add_subdirectory (examples)
 # include_directories (examples)
-add_executable (drawables src examples/drawables.cpp)
+add_executable (balls src examples/balls/balls.cpp)
 
 
 if(LINUX)
@@ -26,10 +26,10 @@ if(LINUX)
     #target_link_libraries(test obiectum "-lGL" "-lGLU" "-lglut" "-lGLEW")
     #target_link_libraries(test obiectum ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )
     target_link_libraries(test obiectum)
-    target_link_libraries(drawables obiectum)
+    target_link_libraries(balls obiectum)
 elseif(APPLE)
     target_link_libraries(test obiectum "-framework OpenGL" "-framework GLUT" "-framework Cocoa" "-framework Foundation")
-    target_link_libraries(drawables obiectum "-framework OpenGL" "-framework GLUT" "-framework Cocoa" "-framework Foundation")
+    target_link_libraries(balls obiectum "-framework OpenGL" "-framework GLUT" "-framework Cocoa" "-framework Foundation")
 endif()
 
 # Indicate which libraries to include during the link process.

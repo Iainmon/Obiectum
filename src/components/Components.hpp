@@ -79,7 +79,7 @@ namespace obiectum {
                 void Draw(void) override;
 
                 public:
-                int raidius;
+                float raidius;
                 int detail;
 
             };
