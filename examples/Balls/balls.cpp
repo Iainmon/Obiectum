@@ -25,13 +25,13 @@ class Spawner : public Component {
 
             // Creates a new GameObject, and assigns it's components.
             GameObject *go = new GameObject();
-            go->AddComponent(new components::Transform());
-            go->AddComponent(new components::RigidBody());
-            go->AddComponent(new components::drawables::Circle());
-            go->AddComponent(new components::drawables::ForceLines());
-            go->AddComponent(new TrippyColors());
-            go->AddComponent(new WallBounce());
-            go->AddComponent(new RandomShrink());
+            go->AddComponent( new components::Transform() );
+            go->AddComponent( new components::RigidBody() );
+            go->AddComponent( new components::drawables::Circle() );
+            go->AddComponent( new components::drawables::ForceLines() );
+            go->AddComponent( new TrippyColors() );
+            go->AddComponent( new WallBounce() );
+            go->AddComponent( new RandomShrink() );
 
             // Runs the setup function for all of the components
             go->setupComponents();
@@ -47,7 +47,7 @@ class Spawner : public Component {
 
             // Configuring the Circle Drawable component
             components::drawables::Circle *circle = go->GetComponent<components::drawables::Circle>();
-            circle->raidius = 1.0f;
+            circle->raidius = 100.0f;
 
             // Adds the component to the Hierarchy instance
             hierarchyRefference->Add(go);
@@ -80,7 +80,7 @@ int main(int argc, char **argv) {
 
     // Creates a GameObject that will act as a static controller, and adds the Spawner component to it
     GameObject *gm2 = new GameObject();
-    gm2->AddComponent(new Spawner());
+    gm2->AddComponent( new Spawner() );
 
     // Retrives the reference to the Spawner component, and passes the reference to the Hierarchy to the Spawner
     Spawner *spawner = gm2->GetComponent<Spawner>();

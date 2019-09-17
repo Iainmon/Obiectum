@@ -22,11 +22,10 @@ using namespace obiectum;
 
 uint64_t obiectum::micros()
 {
-    uint64_t us = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::
+    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::
                                                                             now()
                                                                                 .time_since_epoch())
                     .count();
-    return us;
 }
 
 void Hierarchy::updateDeltaTime(void) {
@@ -130,3 +129,5 @@ void Hierarchy::RunMainLoop() {
 #if defined(__APPLE__)
 void Hierarchy::APPLE_displayFunction() {}
 #endif
+
+uint64_t micros(void) { return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count(); }

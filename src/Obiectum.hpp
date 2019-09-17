@@ -1,5 +1,8 @@
 #pragma once
 
+typedef unsigned long long uint64_t;
+uint64_t micros(void);
+
 namespace obiectum {}
 
 #include "Component.hpp"
@@ -9,3 +12,4 @@ namespace obiectum {}
 #include "components/Components.hpp"
 
 template<class ... Types> struct Tuple {};
+

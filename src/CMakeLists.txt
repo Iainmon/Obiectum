@@ -14,6 +14,8 @@ add_library (obiectum
   physics/Point.cpp
   physics/Color.hpp
   physics/Color.cpp
+  physics/StopClock.hpp
+  physics/StopClock.cpp
   components/Components.hpp
   components/RigidBody.cpp
   components/Transform.cpp

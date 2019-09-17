@@ -27,14 +27,11 @@ class TrippyColors : public Component {
     void Update(void) override {
         CycleColors();
 
-        // color->r = newColor.r;
-        // color->g = newColor.g;
-        // color->b = newColor.b;
-        *color = newColor; // I think this is faster
+        *color = newColor;
     }
     void CycleColors(void) {
         HSVColor tempColor = RGBToHSV(newColor);
-        tempColor.h = (int)transform->position.y % 360;
+        tempColor.h = (int)(transform->position.y) % 360;
         newColor = HSVColorToRGB(tempColor);
     }
 };
